@@ -1,0 +1,65 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "001cc04316a24afbec55",
+  "position": {
+    "x": 0,
+    "y": 9.72644376899696,
+    "z": 0,
+    "height": 221.76291793313072,
+    "width": 314.16413373860183
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_ipl_central_contracts"
+                        }
+                      },
+                      "Property": "amount_in_crores_2025"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(fact_ipl_central_contracts.amount_in_crores_2025)",
+              "nativeQueryRef": "Sum of amount_in_crores_2025"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "fact_ipl_central_contracts"
+                      }
+                    },
+                    "Property": "amount_in_crores_2025"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

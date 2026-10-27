@@ -1,0 +1,84 @@
+table fact_ipl_advertisers
+	lineageTag: b83f1044-1eef-4000-83a9-beefe1bea90c
+
+	column sno
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c723726-8f82-422c-a1c9-591417d08d2f
+		summarizeBy: sum
+		sourceColumn: sno
+
+		annotation SummarizationSetBy = Automatic
+
+	column advertiser_brand
+		dataType: string
+		lineageTag: c3d3be08-b62f-4512-a111-86a683f201b8
+		summarizeBy: none
+		sourceColumn: advertiser_brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: cf1372ef-e6ab-4041-9f23-a3d0e565e9c9
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column brand_ambassadors
+		dataType: string
+		lineageTag: 25455d93-8eb3-4122-a361-442829208756
+		summarizeBy: none
+		sourceColumn: brand_ambassadors
+
+		annotation SummarizationSetBy = Automatic
+
+	column celebrity_influence
+		dataType: string
+		lineageTag: 52c609b9-a3be-4aef-97b1-e4fe896c666f
+		summarizeBy: none
+		sourceColumn: celebrity_influence
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'health social risk'
+		dataType: string
+		lineageTag: 50c2d79d-d08f-47b5-9ad0-2dcca8b424a6
+		summarizeBy: none
+		sourceColumn: health social risk
+
+		annotation SummarizationSetBy = Automatic
+
+	column Merged
+		dataType: string
+		lineageTag: bab73f0f-a85b-44a8-8cc2-ac955da69a70
+		summarizeBy: none
+		sourceColumn: Merged
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_ipl_advertisers = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset"),
+				    #"C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\_fact_ipl_advertisers xlsx" = Source{[#"Folder Path"="C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\",Name="fact_ipl_advertisers.xlsx"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\_fact_ipl_advertisers xlsx"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Imported Excel Workbook",{"Data"}),
+				    #"Expanded Data" = Table.ExpandTableColumn(#"Removed Other Columns", "Data", {"Column1", "Column2", "Column3", "Column4", "Column5", "Column6"}, {"Data.Column1", "Data.Column2", "Data.Column3", "Data.Column4", "Data.Column5", "Data.Column6"}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Expanded Data", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"sno", Int64.Type}, {"advertiser_brand", type text}, {"category", type text}, {"brand_ambassadors", type text}, {"celebrity_influence", type text}, {"health_social_risk", type text}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type", "health_social_risk", Splitter.SplitTextByEachDelimiter({"-"}, QuoteStyle.Csv, false), {"health_social_risk.1", "health_social_risk.2"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"health_social_risk.1", type text}, {"health_social_risk.2", type text}}),
+				    #"Split Column by Delimiter1" = Table.SplitColumn(#"Changed Type1", "health_social_risk.1", Splitter.SplitTextByEachDelimiter({"("}, QuoteStyle.Csv, false), {"health_social_risk.1.1", "health_social_risk.1.2"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Split Column by Delimiter1",{{"health_social_risk.1.1", type text}, {"health_social_risk.1.2", type text}}),
+				    #"Merged Columns" = Table.CombineColumns(#"Changed Type2",{"health_social_risk.1.2", "health_social_risk.2"},Combiner.CombineTextByDelimiter("", QuoteStyle.None),"Merged"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Merged Columns",{{"health_social_risk.1.1", "health social risk"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

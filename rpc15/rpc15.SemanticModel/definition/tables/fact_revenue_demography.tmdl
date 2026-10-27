@@ -1,0 +1,93 @@
+table fact_revenue_demography
+	lineageTag: 4f6ea9c6-6890-478d-8c40-3e390ebbaf04
+
+	column company
+		dataType: string
+		lineageTag: 5310d777-300f-4108-a5cf-1b37527911e6
+		summarizeBy: none
+		sourceColumn: company
+
+		annotation SummarizationSetBy = Automatic
+
+	column sector
+		dataType: string
+		lineageTag: 2bdc5de9-fe44-49b2-a45b-43cd785a9fff
+		summarizeBy: none
+		sourceColumn: sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column parent
+		dataType: string
+		lineageTag: 895c247d-7dcb-4a66-803c-1b03b898b712
+		summarizeBy: none
+		sourceColumn: parent
+
+		annotation SummarizationSetBy = Automatic
+
+	column latest_annual_revenue
+		dataType: string
+		lineageTag: 79793a68-a5b3-49c0-ad76-7d685a3bd08f
+		summarizeBy: none
+		sourceColumn: latest_annual_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column age_group
+		dataType: string
+		lineageTag: c3109c7c-2a1b-4d6b-ab1b-227fafcb4781
+		summarizeBy: none
+		sourceColumn: age_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column income_group
+		dataType: string
+		lineageTag: 89e27e35-7535-41f4-9114-f482be64363c
+		summarizeBy: none
+		sourceColumn: income_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column urban_population
+		dataType: string
+		lineageTag: 30cc58d1-cd3a-431c-ad47-f90a2db1bc64
+		summarizeBy: none
+		sourceColumn: urban_population
+
+		annotation SummarizationSetBy = Automatic
+
+	column demographic_notes
+		dataType: string
+		lineageTag: 50ce2344-23f0-404f-acd0-539f0b22edf4
+		summarizeBy: none
+		sourceColumn: demographic_notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Demographic Notes'
+		dataType: string
+		lineageTag: e184a866-ee80-41e1-8597-79e99c5f1bb2
+		summarizeBy: none
+		sourceColumn: Demographic Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_revenue_demography = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset"),
+				    #"C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\_fact_revenue_demography xlsm" = Source{[#"Folder Path"="C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\",Name="fact_revenue_demography.xlsm"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\_fact_revenue_demography xlsm"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Imported Excel Workbook",{"Data"}),
+				    #"Expanded Data" = Table.ExpandTableColumn(#"Removed Other Columns", "Data", {"Column1", "Column2", "Column3", "Column4", "Column5", "Column6", "Column7", "Column8", "Column9"}, {"Data.Column1", "Data.Column2", "Data.Column3", "Data.Column4", "Data.Column5", "Data.Column6", "Data.Column7", "Data.Column8", "Data.Column9"}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Expanded Data", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"company", type text}, {"sector", type text}, {"parent", type text}, {"latest_annual_revenue", type text}, {"age_group", type text}, {"income_group", type text}, {"urban_population", type text}, {"demographic_notes", type text}, {"Demographic Notes", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

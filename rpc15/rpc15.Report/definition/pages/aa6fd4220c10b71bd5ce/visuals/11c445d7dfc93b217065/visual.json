@@ -1,0 +1,51 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "11c445d7dfc93b217065",
+  "position": {
+    "x": 614.71124620060789,
+    "y": 35.015197568389063,
+    "z": 2000,
+    "height": 254.83282674772039,
+    "width": 330.69908814589667
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_ipl_advertisers"
+                    }
+                  },
+                  "Property": "advertiser_brand"
+                }
+              },
+              "queryRef": "fact_ipl_advertisers.advertiser_brand",
+              "nativeQueryRef": "advertiser_brand"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_ipl_advertisers"
+                    }
+                  },
+                  "Property": "health social risk"
+                }
+              },
+              "queryRef": "fact_ipl_advertisers.health social risk",
+              "nativeQueryRef": "health social risk"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

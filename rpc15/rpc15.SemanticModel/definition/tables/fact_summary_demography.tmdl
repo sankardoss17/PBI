@@ -1,0 +1,53 @@
+table fact_summary_demography
+	lineageTag: 8dc6d57a-3e39-4d7e-8432-bbd58f6fc545
+
+	column income_group
+		dataType: string
+		lineageTag: 5337218d-0f1f-4ffb-8855-2e12162d7422
+		summarizeBy: none
+		sourceColumn: income_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column annual_income
+		dataType: string
+		lineageTag: dd196665-7df0-460e-b33c-2c90ac9080a6
+		summarizeBy: none
+		sourceColumn: annual_income
+
+		annotation SummarizationSetBy = Automatic
+
+	column estimated_user_population
+		dataType: string
+		lineageTag: f22dc319-ed5d-4f40-ba27-54eb7901e67c
+		summarizeBy: none
+		sourceColumn: estimated_user_population
+
+		annotation SummarizationSetBy = Automatic
+
+	column key_characteristics
+		dataType: string
+		lineageTag: 11b242ae-647a-4daa-aaf3-3f871a71d9b3
+		summarizeBy: none
+		sourceColumn: key_characteristics
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_summary_demography = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset"),
+				    #"C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\_fact_summary_demography xlsx" = Source{[#"Folder Path"="C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\",Name="fact_summary_demography.xlsx"]}[Content],
+				    #"Imported Excel Workbook" = Excel.Workbook(#"C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\_fact_summary_demography xlsx"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Imported Excel Workbook",{"Data"}),
+				    #"Expanded Data" = Table.ExpandTableColumn(#"Removed Other Columns", "Data", {"Column1", "Column2", "Column3", "Column4"}, {"Data.Column1", "Data.Column2", "Data.Column3", "Data.Column4"}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Expanded Data", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"income_group", type text}, {"annual_income", type text}, {"estimated_user_population", type text}, {"key_characteristics", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

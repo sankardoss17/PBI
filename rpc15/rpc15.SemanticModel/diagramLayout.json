@@ -1,0 +1,74 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 73,
+            "y": 148
+          },
+          "nodeIndex": "fact_revenue_demography",
+          "nodeLineageTag": "4f6ea9c6-6890-478d-8c40-3e390ebbaf04",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 445,
+            "y": 30
+          },
+          "nodeIndex": "fact_summary_demography",
+          "nodeLineageTag": "8dc6d57a-3e39-4d7e-8432-bbd58f6fc545",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 749,
+            "y": 190
+          },
+          "nodeIndex": "fact_ipl_advertisers",
+          "nodeLineageTag": "b83f1044-1eef-4000-83a9-beefe1bea90c",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 401,
+            "y": 378
+          },
+          "nodeIndex": "fact_ipl_central_contracts",
+          "nodeLineageTag": "05b53a64-2810-421d-a069-9130bef0654f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

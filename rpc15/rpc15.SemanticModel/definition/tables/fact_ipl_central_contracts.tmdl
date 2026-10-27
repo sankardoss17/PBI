@@ -1,0 +1,78 @@
+table fact_ipl_central_contracts
+	lineageTag: 05b53a64-2810-421d-a069-9130bef0654f
+
+	column contract_type
+		dataType: string
+		lineageTag: 86acf260-35e8-4e63-9191-62e429d693c2
+		summarizeBy: none
+		sourceColumn: contract_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column partner_sponsor_name
+		dataType: string
+		lineageTag: d18b70e2-e78a-4a95-8053-aa7e748ca1fc
+		summarizeBy: none
+		sourceColumn: partner_sponsor_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_in_crores_2025
+		dataType: int64
+		formatString: 0
+		lineageTag: 8171d661-7faf-42ca-b82a-3d0b141ae737
+		summarizeBy: sum
+		sourceColumn: amount_in_crores_2025
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_deal_value_in_crores
+		dataType: int64
+		lineageTag: b27e48ac-306f-487e-bff9-fc38fbc8b52b
+		summarizeBy: sum
+		sourceColumn: total_deal_value_in_crores
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column contract_duration
+		dataType: string
+		lineageTag: 9d67551d-9c76-4079-babe-297f59cedcc7
+		summarizeBy: none
+		sourceColumn: contract_duration
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'contract_type Hierarchy'
+		lineageTag: 29c1ff52-bcbe-434e-bf1b-e878b49f3a1e
+
+		level contract_type
+			lineageTag: 47a6217b-931f-48a4-acc7-fabe364acd8f
+			column: contract_type
+
+		level partner_sponsor_name
+			lineageTag: 770e432a-d9bf-463c-b84d-299951a158b8
+			column: partner_sponsor_name
+
+		changedProperty = IsHidden
+
+	partition fact_ipl_central_contracts = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\sankar\Downloads\rpc_15_input_file\rpc_15_input_file\Dataset\fact_ipl_central_contracts.xlsx"), null, true),
+				    fact_ipl_central_contracts_Sheet = Source{[Item="fact_ipl_central_contracts",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(fact_ipl_central_contracts_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"contract_type", type text}, {"partner_sponsor_name", type text}, {"amount_in_crores_2025", type text}, {"total_deal_value_in_crores", type any}, {"contract_duration", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","n/a","0",Replacer.ReplaceText,{"amount_in_crores_2025"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Replaced Value",{{"total_deal_value_in_crores", type text}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Changed Type1","n/a","0",Replacer.ReplaceText,{"total_deal_value_in_crores"}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Replaced Value1",{{"amount_in_crores_2025", Int64.Type}, {"total_deal_value_in_crores", Int64.Type}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

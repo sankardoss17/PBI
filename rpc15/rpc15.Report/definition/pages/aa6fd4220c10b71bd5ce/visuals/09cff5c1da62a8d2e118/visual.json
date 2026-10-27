@@ -1,0 +1,237 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "09cff5c1da62a8d2e118",
+  "position": {
+    "x": 0,
+    "y": 241.21580547112464,
+    "z": 1000,
+    "height": 369.6048632218845,
+    "width": 509.66565349544078
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_ipl_central_contracts"
+                        }
+                      },
+                      "Hierarchy": "contract_type Hierarchy"
+                    }
+                  },
+                  "Level": "contract_type"
+                }
+              },
+              "queryRef": "fact_ipl_central_contracts.contract_type Hierarchy.contract_type",
+              "nativeQueryRef": "contract_type Hierarchy contract_type",
+              "active": true
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_ipl_central_contracts"
+                        }
+                      },
+                      "Hierarchy": "contract_type Hierarchy"
+                    }
+                  },
+                  "Level": "partner_sponsor_name"
+                }
+              },
+              "queryRef": "fact_ipl_central_contracts.contract_type Hierarchy.partner_sponsor_name",
+              "nativeQueryRef": "contract_type Hierarchy partner_sponsor_name",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Arithmetic": {
+                  "Left": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "fact_ipl_central_contracts"
+                            }
+                          },
+                          "Property": "amount_in_crores_2025"
+                        }
+                      },
+                      "Function": 0
+                    }
+                  },
+                  "Right": {
+                    "ScopedEval": {
+                      "Expression": {
+                        "Aggregation": {
+                          "Expression": {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "fact_ipl_central_contracts"
+                                }
+                              },
+                              "Property": "amount_in_crores_2025"
+                            }
+                          },
+                          "Function": 0
+                        }
+                      },
+                      "Scope": []
+                    }
+                  },
+                  "Operator": 3
+                }
+              },
+              "queryRef": "Divide(Sum(fact_ipl_central_contracts.amount_in_crores_2025), ScopedEval(Sum(fact_ipl_central_contracts.amount_in_crores_2025), []))",
+              "nativeQueryRef": "%GT Sum of amount_in_crores_2025"
+            }
+          ]
+        }
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "fact_ipl_central_contracts.contract_type Hierarchy.contract_type"
+            ],
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_ipl_central_contracts"
+                    }
+                  },
+                  "Property": "contract_type"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "fact_ipl_central_contracts.contract_type Hierarchy.partner_sponsor_name"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "objects": {
+      "columnFormatting": [
+        {
+          "properties": {
+            "dataBars": {
+              "positiveColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#0BD81C'"
+                      }
+                    }
+                  }
+                }
+              },
+              "negativeColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#D64550'"
+                      }
+                    }
+                  }
+                }
+              },
+              "axisColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'foreground'"
+                      }
+                    }
+                  }
+                }
+              },
+              "reverseDirection": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "hideText": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "totalMatchingOption": {
+                "expr": {
+                  "Literal": {
+                    "Value": "1L"
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Divide(Sum(fact_ipl_central_contracts.amount_in_crores_2025), ScopedEval(Sum(fact_ipl_central_contracts.amount_in_crores_2025), []))"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "caec11add576e3db452e",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_ipl_central_contracts"
+                  }
+                },
+                "Property": "amount_in_crores_2025"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      }
+    ]
+  }
+}
